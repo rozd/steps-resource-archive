@@ -10,11 +10,23 @@ if [ -z "$extract_to_path" ]; then
   exit 1
 fi;
 
+if [ -z "$skip_if_exists" ]; then
+  echo " (i) skip_if_exists is not provided"
+fi;
+
 echo "------------------------------------------------"
 echo " Inputs:"
 echo "  archive_url: $archive_url"
 echo "  extract_to_path: $extract_to_path"
+echo "  skip_if_exists: $skip_if_exists"
 echo "------------------------------------------------"
+
+# --- Check if exists
+
+if [ "$skip_if_exists" = true ] && [ -e "$extract_to_path" ]; then
+  echo "(i) Archive already exits, skip download"
+  exit 0
+fi
 
 # --- Preparations
 mkdir "downloads"
